@@ -20,6 +20,9 @@
     "dotenv": "^4.0.0",
     "koa": "^2.4.1",
     "koa-router": "^7.2.1",
-    "telegraf": "^3.15.3"
+    "lodash": "^4.17.4",
+    "request-promise": "^4.2.2",
+    "telegraf": "^3.15.3",
+    "uuid-validate": "0.0.2"
   }
 }
