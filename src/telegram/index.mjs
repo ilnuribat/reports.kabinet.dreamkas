@@ -24,15 +24,10 @@ bot.on('text', async ({ update, reply }) => {
   return reply(`Привет, ${name}`);
 });
 
-bot.startPolling();
-
 export async function test() {
   const res = await kabinet.getUserName('efc393f7-1b36-4aee-b160-5266bbd12071');
 
   await telegram.sendMessage(249377954, `новый запуск, ${res}`);
 }
 
-export default function start() {
-  test();
-  bot.startPolling();
-}
+export default bot;
