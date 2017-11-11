@@ -19,7 +19,7 @@ router.post('/webhook/:token/:chatId', async (ctx) => {
     return;
   }
 
-  await telegram.sendMessage(chatId, `смена №${body.shiftId} закрыта`);
+  await telegram.sendMessage(chatId, `смена №${JSON.stringify(body)} закрыта`);
   ctx.status = 200;
 });
 
