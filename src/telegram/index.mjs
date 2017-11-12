@@ -5,6 +5,17 @@ import * as kabinet from '../kabinetApi';
 const bot = new Telegraf(process.env.TELEGRAM_TOKEN);
 const { telegram } = bot;
 
+bot.start(({ reply }) => {
+  return reply(`Поздравляю!
+  Вы установили бота отчетов
+    продаж Кабинет.Дримкас!
+  Чтобы начать получать данные
+    о закрытых сменах введите 
+    токен из Кабинета
+  Его можно найти или создать 
+    в разделе "Профиль" 
+      во вкладке "Токены"`)
+});
 
 bot.on('text', async ({ update, reply }) => {
   const { text: token } = update.message;
