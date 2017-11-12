@@ -1,6 +1,7 @@
 FROM node:8
 
 COPY . /app
+COPY .env-production /app/.env
 
 WORKDIR /app
 
