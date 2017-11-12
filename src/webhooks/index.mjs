@@ -39,7 +39,7 @@ router.post('/webhook/:token/:chatId', async (ctx) => {
     Кассир: ${data.cashier.name},
     Время открытия: ${moment(data.openedAt).format('LLL')},
     Время закрытия: ${moment(data.closedAt).format('LLL')},
-    Касса: ${deviceInfo.device}, id - ${deviceInfo.deviceId},
+    Касса: ${deviceInfo.device},
     Магазин: ${deviceInfo.shop},
     Продажи:
       Наличными: ${summary.cash.value / 100} руб.,
