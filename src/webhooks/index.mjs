@@ -22,7 +22,7 @@ router.post('/webhook/:token/:chatId', async (ctx) => {
 
     return;
   }
-  ctx.status = 200;
+  ctx.status = 204;
 
   if (body.action !== 'UPDATE' || body.type !== 'SHIFT') {
     return;
@@ -40,8 +40,8 @@ router.post('/webhook/:token/:chatId', async (ctx) => {
     Касса: ${deviceInfo.device}, id - ${deviceInfo.deviceId},
     Магазин: ${deviceInfo.shop},
     Продажи:
-      Наличными: ${summary.cash.value},
-      Безнал: ${summary.cashless.value}
+      Наличными: ${summary.cash.value / 100} руб.,
+      Безнал: ${summary.cashless.value / 100} руб.
   `);
 });
 
