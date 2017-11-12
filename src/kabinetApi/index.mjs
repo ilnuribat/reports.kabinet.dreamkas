@@ -88,6 +88,7 @@ export async function getDeviceInfo({ token, deviceId }) {
 
   return {
     device: device.name,
+    deviceId: device.id,
     shop: shop.name,
   };
 }

@@ -10,6 +10,8 @@ const app = new Koa();
 const router = new Router();
 const { telegram } = bot;
 
+moment.locale('ru');
+
 
 router.post('/webhook/:token/:chatId', async (ctx) => {
   const { token, chatId } = ctx.params;
@@ -27,14 +29,15 @@ router.post('/webhook/:token/:chatId', async (ctx) => {
   }
   const { data } = body;
   const { deviceId, openedAt: from, closedAt: to } = data;
+
   const deviceInfo = await kabinet.getDeviceInfo({ token, deviceId });
   const { summary } = await kabinet.getReports({ token, device: deviceId, from, to });
 
   await telegram.sendMessage(chatId, `Отчет от продажах за смену № ${data.shiftId}:
     Кассир: ${data.cashier.name},
-    Время открытия: ${moment(data.openedAt).format('HH:mm')},
-    Время закрытия: ${moment(data.closedAt).format('HH:mm')},
-    Касса: ${deviceInfo.device},
+    Время открытия: ${moment(data.openedAt).format('LLL')},
+    Время закрытия: ${moment(data.closedAt).format('LLL')},
+    Касса: ${deviceInfo.device}, id - ${deviceInfo.deviceId},
     Магазин: ${deviceInfo.shop},
     Продажи:
       Наличными: ${summary.cash.value},
