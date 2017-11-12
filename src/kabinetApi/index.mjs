@@ -1,8 +1,11 @@
 import request from 'request-promise';
 import _ from 'lodash';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const rq = request.defaults({
-  baseUrl: 'https://kabinet.dreamkas.ru/api',
+  baseUrl: process.env.KABINET_URL,
   json: true,
 });
 
@@ -28,7 +31,8 @@ export async function upsertWebhooks(token, chatId) {
     url: '/webhooks',
     headers: getHeaders(token),
   });
-  const webhookURL = `http://95.213.202.42/webhook/${token}/${chatId}`;
+  const { WEBHOOK_HOST, HTTP_PORT } = process.env;
+  const webhookURL = `${WEBHOOK_HOST}:${HTTP_PORT}/webhook/${token}/${chatId}`;
   const found = _.find(webhooks, { url: webhookURL });
 
   if (!found) {
@@ -54,4 +58,36 @@ export async function upsertWebhooks(token, chatId) {
       types: { shifts: true },
     },
   });
+}
+
+export async function getReports({ token, device, from, to }) {
+  const reports = await rq({
+    method: 'GET',
+    url: `/reports/counters?details=true&devices=${device}&from=${from}&to=${to}`,
+    headers: getHeaders(token),
+  });
+
+  return reports;
+}
+
+export async function getDeviceInfo({ token, deviceId }) {
+  const device = await rq({
+    method: 'GET',
+    url: `/devices/${deviceId}`,
+    headers: getHeaders(token),
+  });
+  let shop = 'Без Магазина';
+
+  if (device.groupId) {
+    shop = await rq({
+      method: 'GET',
+      url: `/shops/${device.groupId}`,
+      headers: getHeaders(token),
+    });
+  }
+
+  return {
+    device: device.name,
+    shop: shop.name,
+  };
 }
