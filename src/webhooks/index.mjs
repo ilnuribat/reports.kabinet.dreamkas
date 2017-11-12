@@ -22,13 +22,15 @@ router.post('/webhook/:token/:chatId', async (ctx) => {
 
     return;
   }
-  ctx.status = 204;
 
   if (body.action !== 'UPDATE' || body.type !== 'SHIFT') {
+    ctx.status = 204;
     return;
   }
   const { data } = body;
   const { deviceId, openedAt: from, closedAt: to } = data;
+
+  console.log(data)
 
   const deviceInfo = await kabinet.getDeviceInfo({ token, deviceId });
   const { summary } = await kabinet.getReports({ token, device: deviceId, from, to });
@@ -43,6 +45,7 @@ router.post('/webhook/:token/:chatId', async (ctx) => {
       Наличными: ${summary.cash.value / 100} руб.,
       Безнал: ${summary.cashless.value / 100} руб.
   `);
+  ctx.status = 204;
 });
 
 app
