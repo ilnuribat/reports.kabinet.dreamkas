@@ -1,9 +1,6 @@
 import Telegraf from 'telegraf';
-import dotenv from 'dotenv';
 import validate from 'uuid-validate';
 import * as kabinet from '../kabinetApi';
-
-dotenv.config();
 
 const bot = new Telegraf(process.env.TELEGRAM_TOKEN);
 const { telegram } = bot;
