@@ -9,4 +9,4 @@ RUN npm install
 
 EXPOSE 8080
 
-CMD node --experimental-modules src/index.mjs
+CMD npm start
