@@ -7,14 +7,11 @@ const { telegram } = bot;
 
 bot.start(({ reply }) => {
   return reply(`Поздравляю!
-  Вы установили бота отчетов
-    продаж Кабинет.Дримкас!
-  Чтобы начать получать данные
-    о закрытых сменах введите 
-    токен из Кабинета
-  Его можно найти или создать 
-    в разделе "Профиль" 
-      во вкладке "Токены"`)
+  Вы установили бота Кабинет Дримкас!
+  Чтобы начать получать данные о закрытых сменах, введите токен из Кабинета
+  Его можно создать в профиле.
+  
+  https://kabinet.dreamkas.ru/app/#!/profile/tokens`)
 });
 
 bot.on('text', async ({ update, reply }) => {
@@ -31,11 +28,5 @@ bot.on('text', async ({ update, reply }) => {
 
   return reply(`Привет, ${name}`);
 });
-
-export async function test() {
-  const res = await kabinet.getUserName('efc393f7-1b36-4aee-b160-5266bbd12071');
-
-  await telegram.sendMessage(249377954, `новый запуск, ${res}`);
-}
 
 export default bot;
