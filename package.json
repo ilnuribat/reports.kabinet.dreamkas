@@ -19,6 +19,7 @@
   "homepage": "https://github.com/ilnuribat/reports.kabinet.dreamkas#readme",
   "dependencies": {
     "dotenv": "^4.0.0",
+    "eslint-config-airbnb": "^16.1.0",
     "koa": "^2.4.1",
     "koa-bodyparser": "^4.2.0",
     "koa-router": "^7.2.1",
