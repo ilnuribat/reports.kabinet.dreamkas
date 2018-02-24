@@ -25,15 +25,20 @@ router.post('/webhook/:token/:chatId', async (ctx) => {
 
   if (body.action !== 'UPDATE' || body.type !== 'SHIFT') {
     ctx.status = 204;
+
     return;
   }
   const { data } = body;
   const { deviceId, openedAt: from, closedAt: to } = data;
 
-  console.log(data)
-
+  console.log(data);
   const deviceInfo = await kabinet.getDeviceInfo({ token, deviceId });
-  const { summary } = await kabinet.getReports({ token, device: deviceId, from, to });
+  const { summary } = await kabinet.getReports({
+    token,
+    device: deviceId,
+    from,
+    to,
+  });
 
   await telegram.sendMessage(chatId, `Отчет от продажах за смену № ${data.shiftId}:
     Кассир: ${data.cashier.name},

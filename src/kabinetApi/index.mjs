@@ -60,7 +60,12 @@ export async function upsertWebhooks(token, chatId) {
   });
 }
 
-export async function getReports({ token, device, from, to }) {
+export async function getReports({
+  token,
+  device,
+  from,
+  to,
+}) {
   const reports = await rq({
     method: 'GET',
     url: `/reports/counters?details=true&devices=${device}&from=${from}&to=${to}`,

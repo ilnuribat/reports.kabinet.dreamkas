@@ -3,16 +3,14 @@ import validate from 'uuid-validate';
 import * as kabinet from '../kabinetApi';
 
 const bot = new Telegraf(process.env.TELEGRAM_TOKEN);
-const { telegram } = bot;
 
-bot.start(({ reply }) => {
-  return reply(`Поздравляю!
+bot.start(({ reply }) =>
+  reply(`Поздравляю!
   Вы установили бота Кабинет Дримкас!
   Чтобы начать получать данные о закрытых сменах, введите токен из Кабинета
   Его можно создать в профиле.
-  
-  https://kabinet.dreamkas.ru/app/#!/profile/tokens`)
-});
+
+  https://kabinet.dreamkas.ru/app/#!/profile/tokens`));
 
 bot.on('text', async ({ update, reply }) => {
   const { text: token } = update.message;
