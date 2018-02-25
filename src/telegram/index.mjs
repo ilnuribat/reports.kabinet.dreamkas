@@ -1,5 +1,4 @@
 import Telegraf from 'telegraf';
-import validate from 'uuid-validate';
 import * as kabinet from '../kabinetApi';
 
 const bot = new Telegraf(process.env.TELEGRAM_TOKEN);
@@ -12,19 +11,46 @@ bot.start(({ reply }) =>
 
   https://kabinet.dreamkas.ru/app/#!/profile/tokens`));
 
-bot.on('text', async ({ update, reply }) => {
-  const { text: token } = update.message;
-  const { id: chatId } = update.message.chat;
-
-  if (!validate(token)) {
-    return reply('Некорректный формат токена');
-  }
-
+bot.hears(/^[0-9A-F]{8}-[0-9A-F]{4}-[4][0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i, async (ctx) => {
+  const { message: { text: token }, chat: { id: chatId }, reply } = ctx;
   const name = await kabinet.getUserName(token);
 
   await kabinet.upsertWebhooks(token, chatId);
 
   return reply(`Привет, ${name}`);
+});
+
+bot.on('text', async ({ reply }) => {
+  await reply('начало меню, снизу кнопки', {
+    reply_markup: {
+      inline_keyboard: [
+        [{
+          text: 'text of button',
+          callback_data: 'callback_data_of_button',
+        }],
+      ],
+    },
+  });
+});
+
+bot.on('callback_query', async (ctx) => {
+  try {
+    return ctx.editMessageText(
+      `edit text ${new Date()}`,
+      {
+        reply_markup: {
+          inline_keyboard: [
+            [{
+              text: 'text of button',
+              callback_data: 'callback_data_of_button',
+            }],
+          ],
+        },
+      },
+    );
+  } catch (err) {
+    return ctx.reply('произошла ошибка, не удалось обновить меню');
+  }
 });
 
 export default bot;
