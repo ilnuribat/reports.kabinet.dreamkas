@@ -5,7 +5,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const rq = request.defaults({
-  baseUrl: process.env.KABINET_URL,
+  baseUrl: process.env.KABINET_URL || 'https://kabinet.dreamkas.ru/api',
   json: true,
 });
 
