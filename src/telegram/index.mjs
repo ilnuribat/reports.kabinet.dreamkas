@@ -41,7 +41,14 @@ bot.on('callback_query', async (ctx) => {
         reply_markup: {
           inline_keyboard: [
             [{
-              text: 'text of button',
+              text: 'сверху слева',
+              callback_data: 'callback_data_of_button',
+            }, {
+              text: 'кнопка справа',
+              callback_data: 'callback_data_of_button',
+            }],
+            [{
+              text: 'снизу одна',
               callback_data: 'callback_data_of_button',
             }],
           ],
